@@ -6,6 +6,11 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>Header</h1>
+    <?php
+        $a = 7;
+        $b = '8';
+
+        echo(++$a > --$b ? $a : $b);
+    ?>
   </body>
 </html>
