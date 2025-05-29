@@ -6,6 +6,8 @@ namespace MyProject\Controllers;
 
  
 
+use MyProject\Models\Articles\Article;
+
 use MyProject\Services\Db;
 
 use MyProject\View\View;
@@ -16,13 +18,9 @@ class MainController
 
 {
 
-    /** @var View */
+   
 
     private $view;
-
- 
-
-    /** @var Db */
 
     private $db;
 
@@ -44,7 +42,11 @@ class MainController
 
     {
 
-        $articles = $this->db->query('SELECT * FROM `articles`;');
+        $articles = $this->db->query('SELECT * FROM `articles`;', [], Article::class);
+
+        var_dump($articles);
+
+        return;
 
         $this->view->renderHtml('main/main.php', ['articles' => $articles]);
 
