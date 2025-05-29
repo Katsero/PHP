@@ -12,7 +12,7 @@ use MyProject\View\View;
 
  
 
-class MainController
+class ArticlesController
 
 {
 
@@ -39,15 +39,32 @@ class MainController
     }
 
  
+public function view(int $articleId)
 
-    public function main()
+{
 
-    {
+    $result = $this->db->query(
 
-        $articles = $this->db->query('SELECT * FROM `articles`;');
+        'SELECT * FROM `articles` WHERE id = :id;',
 
-        $this->view->renderHtml('main/main.php', ['articles' => $articles]);
+        [':id' => $articleId]
+
+    );
+
+ 
+
+    if ($result === []) {
+
+        $this->view->renderHtml('errors/404.php');
+
+        return;
 
     }
+
+ 
+
+    $this->view->renderHtml('articles/view.php', ['article' => $result[0]]);
+
+}
 
 }

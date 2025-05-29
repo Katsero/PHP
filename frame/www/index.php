@@ -10,16 +10,50 @@ spl_autoload_register(function (string $className) {
 
  
 
-$controller = new \MyProject\Controllers\MainController();
+$route = $_GET['route'] ?? '';
+
+$routes = require __DIR__ . '/../src/routes.php';
 
  
 
-if (!empty($_GET['name'])) {
+$isRouteFound = false;
 
-    $controller->sayHello($_GET['name']);
+foreach ($routes as $pattern => $controllerAndAction) {
 
-} else {
+    preg_match($pattern, $route, $matches);
 
-    $controller->main();
+    if (!empty($matches)) {
+
+        $isRouteFound = true;
+
+        break;
+
+    }
 
 }
+
+ 
+
+if (!$isRouteFound) {
+
+    echo 'Страница не найдена!';
+
+    return;
+
+}
+
+ 
+
+unset($matches[0]);
+
+ 
+
+$controllerName = $controllerAndAction[0];
+
+$actionName = $controllerAndAction[1];
+
+ 
+
+$controller = new $controllerName();
+
+$controller->$actionName(...$matches);
