@@ -90,6 +90,34 @@ class ArticlesController
     exit;
 }
 
+public function editComment(int $articleId, int $commentId): void
+{
+    $article = Article::getById($articleId);
+    $comment = Comment::getById($commentId);
+
+    if ($article === null || $comment === null) {
+        header('Location: /');
+        exit;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $text = trim($_POST['text'] ?? '');
+
+        if (!empty($text)) {
+            $comment->setText($text);
+            $comment->save();
+
+            header('Location: /PHP/frame/www/articles/' . $articleId . '#comment' . $commentId);
+            exit;
+        }
+    }
+
+    $this->view->renderHtml('comments/edit.php', [
+        'comment' => $comment,
+        'articleId' => $articleId
+    ]);
+}
+
 public function edit(int $articleId): void
 
 {
