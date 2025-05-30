@@ -53,7 +53,23 @@ class ArticlesController
 
         }
 
- 
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $text = trim($_POST['text']);
+
+        if (!empty($text)) {
+
+            $author = User::getById(1);
+
+            $comment = new Comment();
+            $comment->setAuthor($author);
+            $comment->setArticle($article);
+            $comment->setText($text);
+            $comment->save();
+
+            header('Location: ' . $this->getCurrentUrl());
+            exit;
+        }
+    }
 
         $this->view->renderHtml('articles/view.php', [
 
@@ -65,7 +81,14 @@ class ArticlesController
 
     }
 
- 
+private function getCurrentUrl(): string
+{
+    $scheme = $_SERVER['REQUEST_SCHEME'] ?? 'http';
+    $host = $_SERVER['HTTP_HOST'];
+    $uri = $_SERVER['REQUEST_URI'];
+
+    return $scheme . '://' . $host . $uri;
+}
 
 public function edit(int $articleId): void
 

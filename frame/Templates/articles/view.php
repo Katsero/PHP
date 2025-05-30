@@ -18,4 +18,13 @@
     <p>Пока нет комментариев.</p>
 <?php endif; ?>
 
+<hr>
+
+<h2>Оставить комментарий</h2>
+
+<form method="post">
+    <textarea name="text" placeholder="Ваш комментарий" required></textarea><br>
+    <button type="submit">Отправить</button>
+</form>
+
 <?php include __DIR__ . '/../footer.php'; ?>
