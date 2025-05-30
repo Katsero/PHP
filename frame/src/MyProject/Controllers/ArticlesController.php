@@ -11,7 +11,8 @@ use MyProject\Models\Articles\Article;
 use MyProject\View\View;
 
 use MyProject\Models\Users\User;
- 
+
+use MyProject\Models\Comments\Comment;
 
 class ArticlesController
 
@@ -39,11 +40,14 @@ class ArticlesController
 
         $article = Article::getById($articleId);
 
+        $comments = Comment::getAllByArticleId($articleId);
+
+
  
 
         if ($article === null) {
 
-            $this->view->renderHtml('errors/404.php', [], 404);
+            $this->view->renderHtml('errors/404.php', [], 404); //TODO add to index.php
 
             return;
 
@@ -53,7 +57,9 @@ class ArticlesController
 
         $this->view->renderHtml('articles/view.php', [
 
-            'article' => $article
+            'article' => $article,
+
+            'comments' => $comments,
 
         ]);
 

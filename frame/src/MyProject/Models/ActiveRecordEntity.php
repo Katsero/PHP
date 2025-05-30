@@ -253,4 +253,13 @@ public function delete(): void
     $this->id = null;
 
 }
+
+    public static function findAllWhere(string $column, $value): array
+    
+    {
+        $db = Db::getInstance();
+        $sql = 'SELECT * FROM `' . static::getTableName() . '` WHERE `' . $column . '` = :value;';
+        return $db->query($sql, [':value' => $value], static::class);
+    }
+
 }

@@ -92,4 +92,8 @@ class Comment extends ActiveRecordEntity
         $this->text = $text;
     }
 
+    public static function getAllByArticleId(int $articleId): array
+    {
+        return static::findAllWhere('article_id', $articleId);
+    }
 }
