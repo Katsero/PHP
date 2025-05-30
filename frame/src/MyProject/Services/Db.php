@@ -14,29 +14,33 @@ class Db
 
     private $pdo;
 
+ private static $instancesCount = 0;
+
+private function __construct()
+
+{
+
+    self::$instancesCount++;
+
  
 
-    public function __construct()
-
-    {
-
-        $dbOptions = (require __DIR__ . '/../../settings.php')['db'];
+    $dbOptions = (require __DIR__ . '/../../settings.php')['db'];
 
  
 
-        $this->pdo = new \PDO(
+    $this->pdo = new \PDO(
 
-            'mysql:host=' . $dbOptions['host'] . ';dbname=' . $dbOptions['dbname'],
+        'mysql:host=' . $dbOptions['host'] . ';dbname=' . $dbOptions['dbname'],
 
-            $dbOptions['user'],
+        $dbOptions['user'],
 
-            $dbOptions['password']
+        $dbOptions['password']
 
-        );
+    );
 
-        $this->pdo->exec('SET NAMES UTF8');
+    $this->pdo->exec('SET NAMES UTF8');
 
-    }
+}
 
  
 
@@ -61,4 +65,22 @@ public function query(string $sql, array $params = [], string $className = 'stdC
         return $sth->fetchAll(\PDO::FETCH_CLASS, $className);
 
     }
+
+    private static $instance;
+
+public static function getInstance(): self
+
+{
+
+    if (self::$instance === null) {
+
+        self::$instance = new self();
+
+    }
+
+ 
+
+    return self::$instance;
+
+}
 }
