@@ -190,8 +190,67 @@ private function camelCaseToUnderscore(string $source): string
 
     }
 
- 
-
     abstract protected static function getTableName(): string;
 
+private function insert(array $mappedProperties): void
+
+{
+
+    $filteredProperties = array_filter($mappedProperties);
+
+ 
+
+    $columns = [];
+
+    $paramsNames = [];
+
+    $params2values = [];
+
+    foreach ($filteredProperties as $columnName => $value) {
+
+        $columns[] = '`' . $columnName. '`';
+
+        $paramName = ':' . $columnName;
+
+        $paramsNames[] = $paramName;
+
+        $params2values[$paramName] = $value;
+
+    }
+
+ 
+
+    $columnsViaSemicolon = implode(', ', $columns);
+
+    $paramsNamesViaSemicolon = implode(', ', $paramsNames);
+
+ 
+
+    $sql = 'INSERT INTO ' . static::getTableName() . ' (' . $columnsViaSemicolon . ') VALUES (' . $paramsNamesViaSemicolon . ');';
+
+ 
+
+    $db = Db::getInstance();
+
+    $db->query($sql, $params2values, static::class);
+
+}
+
+public function delete(): void
+
+{
+
+    $db = Db::getInstance();
+
+    $db->query(
+
+        'DELETE FROM `' . static::getTableName() . '` WHERE id = :id',
+
+        [':id' => $this->id]
+
+    );
+
+    $this->id = null;
+
+}
 }

@@ -77,4 +77,27 @@ public function getAuthor(): User
 
     }
 
+/**
+
+ * @param User $author
+
+ */
+
+public function setAuthor(User $author): void
+
+{
+
+    $this->authorId = $author->getId();
+
+}
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function setText(string $text): void
+    {
+        $this->text = $text;
+    }
 }

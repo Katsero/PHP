@@ -8,7 +8,7 @@
 
     <title>Мой блог</title>
 
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/PHP/frame/styles/styles.css">
 
 </head>
 
