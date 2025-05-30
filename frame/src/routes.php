@@ -10,6 +10,8 @@ return [
 
     '~^articles/add$~' => [\MyProject\Controllers\ArticlesController::class, 'add'],
 
+    '~^articles/(\d+)/comments$~' => [\MyProject\Controllers\ArticlesController::class, 'addComment'],
+
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main'],
 
 ];

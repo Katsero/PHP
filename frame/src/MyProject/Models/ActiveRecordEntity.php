@@ -234,6 +234,7 @@ private function insert(array $mappedProperties): void
 
     $db->query($sql, $params2values, static::class);
 
+    $this->id = (int)$db->getLastInsertId();
 }
 
 public function delete(): void
@@ -255,7 +256,7 @@ public function delete(): void
 }
 
     public static function findAllWhere(string $column, $value): array
-    
+
     {
         $db = Db::getInstance();
         $sql = 'SELECT * FROM `' . static::getTableName() . '` WHERE `' . $column . '` = :value;';

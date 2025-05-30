@@ -1,5 +1,3 @@
-<!-- Templates/articles/view.php -->
-
 <?php include __DIR__ . '/../header.php'; ?>
 
 <h1><?= htmlspecialchars($article->getName()) ?></h1>
@@ -22,7 +20,7 @@
 
 <h2>Оставить комментарий</h2>
 
-<form method="post">
+<form method="post" action="/PHP/frame/www/articles/<?= $article->getId() ?>/comments">
     <textarea name="text" placeholder="Ваш комментарий" required></textarea><br>
     <button type="submit">Отправить</button>
 </form>

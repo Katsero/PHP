@@ -53,24 +53,6 @@ class ArticlesController
 
         }
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $text = trim($_POST['text']);
-
-        if (!empty($text)) {
-
-            $author = User::getById(1);
-
-            $comment = new Comment();
-            $comment->setAuthor($author);
-            $comment->setArticle($article);
-            $comment->setText($text);
-            $comment->save();
-
-            header('Location: ' . $this->getCurrentUrl());
-            exit;
-        }
-    }
-
         $this->view->renderHtml('articles/view.php', [
 
             'article' => $article,
@@ -81,13 +63,31 @@ class ArticlesController
 
     }
 
-private function getCurrentUrl(): string
+    public function addComment(int $articleId): void
 {
-    $scheme = $_SERVER['REQUEST_SCHEME'] ?? 'http';
-    $host = $_SERVER['HTTP_HOST'];
-    $uri = $_SERVER['REQUEST_URI'];
+    $article = Article::getById($articleId);
 
-    return $scheme . '://' . $host . $uri;
+    if ($article === null) {
+        header('Location: /');
+        exit;
+    }
+
+    $text = trim($_POST['text'] ?? '');
+
+    if (!empty($text)) {
+        $author = User::getById(1);
+
+        $comment = new Comment();
+        $comment->setAuthor($author);
+        $comment->setArticle($article);
+        $comment->setText($text);
+        $comment->save();
+
+        $commentId = $comment->getId();
+    }
+
+    header('Location: /PHP/frame/www/articles/' . $articleId . '#comment' . $commentId);
+    exit;
 }
 
 public function edit(int $articleId): void

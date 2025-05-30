@@ -83,4 +83,9 @@ public static function getInstance(): self
     return self::$instance;
 
 }
+
+public function getLastInsertId(): string
+{
+    return $this->pdo->lastInsertId();
+}
 }
