@@ -78,6 +78,21 @@ class ArticlesController
     exit;
     }
 
+public function deleteComment(int $articleId, int $commentId): void
+{
+    $comment = Comment::getById($commentId);
+
+    if ($comment === null) {
+        header('Location: /PHP/frame/www/articles/' . $articleId);
+        exit;
+    }
+
+    $comment->delete();
+
+    header('Location: /PHP/frame/www/articles/' . $articleId);
+    exit;
+}
+    
     public function addComment(int $articleId): void
 {
     $article = Article::getById($articleId);
@@ -135,33 +150,36 @@ public function editComment(int $articleId, int $commentId): void
 }
 
 public function edit(int $articleId): void
-
 {
-
-    /** @var Article $article */
-
     $article = Article::getById($articleId);
 
- 
-
     if ($article === null) {
-
         $this->view->renderHtml('errors/404.php', [], 404);
-
         return;
-
     }
 
- 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $name = trim($_POST['name'] ?? '');
+        $text = trim($_POST['text'] ?? '');
 
-    $article->setName('Новое название статьи');
+        if (!empty($name) && !empty($text)) {
+            $article->setName($name);
+            $article->setText($text);
+            $article->save();
 
-    $article->setText('Новый текст статьи');
+            header('Location: /PHP/frame/www/articles/' . $articleId);
+            exit;
+        } else {
+            // Можно добавить вывод ошибки (по желанию)
+            echo 'Заполните все поля';
+            exit;
+        }
+    }
 
- 
-
-    $article->save();
-
+    // Отображаем форму редактирования
+    $this->view->renderHtml('articles/edit.php', [
+        'article' => $article
+    ]);
 }
 
 public function add(): void
