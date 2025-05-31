@@ -170,42 +170,40 @@ public function edit(int $articleId): void
             header('Location: /PHP/frame/www/articles/' . $articleId);
             exit;
         } else {
-            // Можно добавить вывод ошибки (по желанию)
             echo 'Заполните все поля';
             exit;
         }
     }
-
-    // Отображаем форму редактирования
+    
     $this->view->renderHtml('articles/edit.php', [
         'article' => $article
     ]);
 }
 
 public function add(): void
-
 {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $name = trim($_POST['name'] ?? '');
+        $text = trim($_POST['text'] ?? '');
 
-    $author = User::getById(1);
+        if (!empty($name) && !empty($text)) {
+            $author = User::getById(1); 
 
- 
+            $article = new Article();
+            $article->setAuthor($author);
+            $article->setName($name);
+            $article->setText($text);
+            $article->save();
 
-    $article = new Article();
+            header('Location: /PHP/frame/www/');
+            exit;
+        } else {
+            echo 'Заполните все поля';
+            exit;
+        }
+    }
 
-    $article->setAuthor($author);
-
-    $article->setName('Новое название статьи');
-
-    $article->setText('Новый текст статьи');
-
- 
-
-    $article->save();
-
- 
-
-    var_dump($article);
-
+    $this->view->renderHtml('articles/add.php');
 }
 
 }

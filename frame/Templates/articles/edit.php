@@ -13,7 +13,15 @@
         <textarea name="text" required><?= htmlspecialchars($article->getText()) ?></textarea><br>
     </label>
 
+
+
     <button type="submit">Сохранить</button>
+</form>
+
+<hr>
+
+<form action="/PHP/frame/www/articles/<?= $article->getId() ?>/delete" method="post" style="display:inline;">
+    <button type="submit">Удалить статью</button>
 </form>
 
 <?php include __DIR__ . '/../footer.php'; ?>

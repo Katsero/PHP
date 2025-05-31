@@ -7,4 +7,10 @@
     <button type="submit">Сохранить</button>
 </form>
 
+<hr>
+
+<form action="/PHP/frame/www/articles/<?= $articleId ?>/comments/<?= $comment->getId() ?>/delete" method="post" style="display:inline;">
+    <button type="submit">Удалить комментарий</button>
+</form>
+
 <?php include __DIR__ . '/../footer.php'; ?>

@@ -4,6 +4,7 @@
 <p><?= nl2br(htmlspecialchars($article->getText())) ?></p>
 <p>Автор: <?= htmlspecialchars($article->getAuthor()->getNickname()) ?></p>
 
+<a href="/PHP/frame/www/articles/<?= $article->getId() ?>/edit">Редактировать статью</a>
 <hr>
 
 <h2>Комментарии:</h2>

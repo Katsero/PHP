@@ -1,8 +1,17 @@
 <?php include __DIR__ . '/../header.php'; ?>
 
+<a href="/PHP/frame/www/articles/add">
+    Добавить новую статью
+</a>
+
+
 <?php foreach ($articles as $article): ?>
 
-    <h2><?= $article->getName() ?></h2>
+    <h2>        
+        <a href="/PHP/frame/www/articles/<?= $article->getId() ?>">
+            <?= htmlspecialchars($article->getName()) ?>
+        </a>
+    </h2>
 
     <p><?= $article->getText() ?></p>
 
