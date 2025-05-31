@@ -60,7 +60,22 @@ class ArticlesController
             'comments' => $comments,
 
         ]);
+        
+    }
 
+    public function delete(int $articleId): void
+    {
+        $article = Article::getById($articleId);
+
+    if ($article === null) {
+        header('Location: /PHP/frame/www/');
+        exit;
+    }
+
+    $article->delete();
+
+    header('Location: /PHP/frame/www/');
+    exit;
     }
 
     public function addComment(int $articleId): void
@@ -89,6 +104,7 @@ class ArticlesController
     header('Location: /PHP/frame/www/articles/' . $articleId . '#comment' . $commentId);
     exit;
 }
+
 
 public function editComment(int $articleId, int $commentId): void
 {

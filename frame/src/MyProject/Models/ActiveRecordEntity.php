@@ -192,6 +192,17 @@ private function camelCaseToUnderscore(string $source): string
 
     abstract protected static function getTableName(): string;
 
+public function delete(): void
+{
+    $db = Db::getInstance();
+    $db->query(
+        'DELETE FROM `' . static::getTableName() . '` WHERE id = :id',
+        [':id' => $this->id]
+    );
+
+    $this->id = null;
+}
+
 private function insert(array $mappedProperties): void
 
 {
@@ -237,23 +248,6 @@ private function insert(array $mappedProperties): void
     $this->id = (int)$db->getLastInsertId();
 }
 
-public function delete(): void
-
-{
-
-    $db = Db::getInstance();
-
-    $db->query(
-
-        'DELETE FROM `' . static::getTableName() . '` WHERE id = :id',
-
-        [':id' => $this->id]
-
-    );
-
-    $this->id = null;
-
-}
 
     public static function findAllWhere(string $column, $value): array
 
