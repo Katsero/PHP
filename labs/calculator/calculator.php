@@ -7,11 +7,9 @@ if (empty($expression)) {
     exit;
 }
 
-// Удаляем лишние пробелы
 $expression = str_replace(' ', '', $expression);
 
 try {
-    // Парсим и вычисляем выражение
     $tokens = tokenize($expression);
     $result = parseExpression($tokens);
 
@@ -25,7 +23,6 @@ try {
     echo "Ошибка: " . $e->getMessage();
 }
 
-// ==== Лексический анализатор ====
 function tokenize($expr) {
     $tokens = [];
     $i = 0;
@@ -55,7 +52,6 @@ function tokenize($expr) {
     return $tokens;
 }
 
-// ==== Рекурсивный парсер ====
 function parseExpression(&$tokens) {
     $result = parseTerm($tokens);
 
