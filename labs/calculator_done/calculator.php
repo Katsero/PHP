@@ -1,5 +1,7 @@
 <?php
 
+require_once '../eval_done/eval.php';
+
 $expression = $_POST['expression'] ?? '';
 
 if (empty($expression)) {
@@ -44,6 +46,16 @@ function tokenize($expr) {
             }
 
             $tokens[] = $num;
+        } elseif (ctype_alpha($char)) {
+            $func = $char;
+            $i++;
+
+            while ($i < $len && ctype_alpha($expr[$i])) {
+                $func .= $expr[$i];
+                $i++;
+            }
+
+            $tokens[] = ['func', $func];
         } else {
             throw new Exception("Неизвестный символ: $char");
         }
@@ -95,7 +107,21 @@ function parseFactor(&$tokens) {
         return $result;
     } elseif (is_numeric($token)) {
         return floatval($token);
+    } elseif (is_array($token) && $token[0] === 'func') {
+        $funcName = $token[1];
+
+        if (array_shift($tokens) !== '(') {
+            throw new Exception("Ожидалась '(' после функции $funcName");
+        }
+
+        $arg = parseExpression($tokens);
+
+        if (array_shift($tokens) !== ')') {
+            throw new Exception("Ожидалась ')' после аргумента $funcName");
+        }
+
+        return evaluateTrigonometricFunction($funcName, $arg);
     } else {
-        throw new Exception("Ожидалось число или '('");
+        throw new Exception("Ожидалось число, '(' или тригонометрическая функция");
     }
 }

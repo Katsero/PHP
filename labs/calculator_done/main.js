@@ -26,6 +26,10 @@ const allowedKeys = [
   ".",
   "Backspace",
   "Delete",
+  "sin",
+  "cos",
+  "tan",
+  "cot",
 ];
 
 display.addEventListener("keydown", function (event) {
