@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Форма обратной связи</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img src="public/logo.svg" alt="Логотип МосПолитеха" />
+      </div>
+      <h1>Задание: Feedback form</h1>
+    </header>
+
+    <main>
+      <form action="https://httpbin.org/post" method="POST">
+        <label
+          >Имя пользователя:
+          <input type="text" name="name" required />
+        </label>
+
+        <label
+          >Email пользователя:
+          <input type="email" name="email" required />
+        </label>
+
+        <label
+          >Тип обращения:
+          <select name="type">
+            <option value="жалоба">Жалоба</option>
+            <option value="предложение">Предложение</option>
+            <option value="благодарность">Благодарность</option>
+          </select>
+        </label>
+
+        <label
+          >Текст обращения:
+          <textarea name="message" required></textarea>
+        </label>
+
+        <label
+          ><input type="checkbox" name="response_type" value="sms" /> SMS</label
+        >
+        <label
+          ><input type="checkbox" name="response_type" value="email" />
+          Email</label
+        >
+
+        <button type="submit">Отправить</button>
+      </form>
+
+      <p><a href="headers.php">Перейти на вторую страницу</a></p>
+    </main>
+
+    <footer>
+      <p>Задание для самостоятельной работы</p>
+    </footer>
+  </body>
+</html>

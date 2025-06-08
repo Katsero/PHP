@@ -31,7 +31,6 @@ function showContacts($sort = 'default', $page = 1) {
     }
     $html .= '</table>';
 
-    // Пагинация
     $html .= '<div style="margin-top: 1em;">';
     for ($i = 1; $i <= $pages; $i++) {
         $active = ($i == $page) ? 'style="border: 2px solid #000"' : '';
